@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
-const Input = () => {
+const Calc = () => {
     return (
         <View>
 
@@ -11,4 +11,4 @@ const Input = () => {
 
 const styles = StyleSheet.create({})
 
-export default Input;
+export default Calc;
