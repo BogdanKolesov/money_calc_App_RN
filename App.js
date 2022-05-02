@@ -1,20 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import AppLoading from 'expo-app-loading';
+import { useFonts, Roboto_400Regular, Roboto_100Thin, Roboto_900Black } from '@expo-google-fonts/roboto';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import Home from './components/views/Home';
+import Expenses from './components/views/Expenses';
 
 export default function App() {
+  let [fontsLoaded] = useFonts({
+    Roboto_400Regular, Roboto_100Thin, Roboto_900Black
+  });
+
+
+
+  const Tab = createMaterialTopTabNavigator();
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Tab.Navigator>
+      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Expenses" component={Expenses} />
+    </Tab.Navigator>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
