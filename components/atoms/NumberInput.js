@@ -20,13 +20,13 @@ const NumberInput = ({ minified, inputTitle, placeholder, value }) => {
 export default NumberInput;
 
 const StyledView = styled.View`
-    width: ${props => props.minified ? 60 : 100}%;
+    width: ${props => props.minified ? 80 : 100}%;
     margin-top: 10px;
 `
 
 const Input = styled.TextInput`
     width: 100%;
-    font-size: 18px;
+    font-size: 22px;
     color: black;
     border-color: black;
     border-width: 1px;

@@ -1,11 +1,13 @@
 import React from 'react';
 import { View } from 'react-native';
+import { AppContainer, DevLabel, PageTitle } from '../../atoms';
 
 const Expenses = () => {
     return (
-        <View>
-
-        </View>
+        <AppContainer>
+            <DevLabel />
+            <PageTitle title='Архив' />
+        </AppContainer>
     );
 }
 
