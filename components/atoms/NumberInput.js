@@ -2,9 +2,9 @@ import React from 'react';
 import { View, TextInput, Text } from 'react-native';
 import styled from 'styled-components/native';
 
-const NumberInput = ({ inputTitle, placeholder, value }) => {
+const NumberInput = ({ minified, inputTitle, placeholder, value }) => {
     return (
-        <StyledView>
+        <StyledView minified={minified}>
             <ViewTitle>
                 {inputTitle}
             </ViewTitle>
@@ -20,7 +20,7 @@ const NumberInput = ({ inputTitle, placeholder, value }) => {
 export default NumberInput;
 
 const StyledView = styled.View`
-    width: 60%;
+    width: ${props => props.minified ? 60 : 100}%;
     margin-top: 10px;
 `
 
@@ -33,6 +33,7 @@ const Input = styled.TextInput`
     flex-direction: column;
     border-radius: 5px;
     padding: 5px;
+    border-bottom-right-radius: 0px;
 `
 
 const ViewTitle = styled.Text`
