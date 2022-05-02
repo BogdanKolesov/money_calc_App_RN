@@ -1,11 +1,13 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
+import { AppContainer, NumberInput } from '../../atoms';
 
 const Home = () => {
     return (
-        <View>
-
-        </View>
+        <AppContainer>
+            <NumberInput inputTitle='Всего средств' />
+            <NumberInput inputTitle='Количество дней' />
+        </AppContainer>
     );
 }
 
