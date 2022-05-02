@@ -5,6 +5,7 @@ import DevLabel from './DevLabel'
 import Remainder from './Remainder'
 import Icon from './Icon'
 import PageTitle from './PageTitle'
+import Divider from './Divider'
 
 export {
     AppContainer,
@@ -13,5 +14,6 @@ export {
     DevLabel,
     Remainder,
     Icon,
-    PageTitle
+    PageTitle,
+    Divider
 }

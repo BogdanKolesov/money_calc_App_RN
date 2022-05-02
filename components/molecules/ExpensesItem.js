@@ -33,6 +33,9 @@ const ExpensesItemContainer = styled.View`
     justify-content: space-between;
     align-items: center;
     margin-top: 10px;
+    border-bottom-color: green;
+    border-bottom-width: 1px;
+    padding-bottom: 10px;
 `
 
 const ExpensesItemContent = styled.View`
