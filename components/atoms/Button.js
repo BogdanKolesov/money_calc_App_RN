@@ -3,9 +3,9 @@ import { TouchableOpacity, Text } from 'react-native';
 import styled from 'styled-components/native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-const Button = ({ children }) => {
+const Button = ({ children, onPress }) => {
     return (
-        <StyledButton>
+        <StyledButton onPress={onPress}>
             <StyledText>
                 {children}
             </StyledText>
