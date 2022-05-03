@@ -43,16 +43,25 @@ const Home = () => {
         }
     };
 
-    const savedItemArray = [
-        {
-            plus: plusInput
-        }
-    ]
+    const addToArray = (value) => {
+        let date = (new Date()).toString()
+        setSavedArray(
+            [...savedArray,
+            {
+                value: value,
+                time: date
+            }
+            ]
+        )
+    }
 
-    const setItemsToArray = async () => {
-        const itemArray = savedItemArray;
+
+    const setItemsToArray = async (value) => {
         try {
+            await addToArray(value)
+            const itemArray = savedArray;
             await AsyncStorage.setItem("itemArray", JSON.stringify(itemArray));
+            await setSavedArray([])
         } catch (error) {
             console.log(error);
         }
@@ -75,9 +84,8 @@ const Home = () => {
         setEdit(!edit)
     }
 
-    const setPostValues = async () => {
-        await setItemsToArray()
-        await getItemsFromArray()
+    const setPostValues = async (value) => {
+        await setItemsToArray(value)
     }
 
     useEffect(() => {
@@ -109,11 +117,15 @@ const Home = () => {
                         <Button onPress={() => setEdit(!edit)} >Редактировать</Button>
                     </>
             }
-            <Text>{plusInput}</Text>
-            <Text>{minusInput}</Text>
-
-            <ActionInputItem onChangeText={setPlusInput} onPress={() => setPostValues()} add />
-            <ActionInputItem onChangeText={setMinusInput} />
+            {
+                savedArray.map((data, index) => {
+                    return (
+                        <Text key={index}>time:{data.time} ,{data.value}</Text>
+                    )
+                })
+            }
+            <ActionInputItem onChangeText={setPlusInput} onPress={() => setPostValues(plusInput)} add />
+            <ActionInputItem onChangeText={setMinusInput} onPress={() => setPostValues(-(minusInput))} />
         </AppContainer>
     );
 }

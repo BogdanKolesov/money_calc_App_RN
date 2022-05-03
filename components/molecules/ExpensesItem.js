@@ -4,22 +4,26 @@ import styled from 'styled-components/native';
 import Ionic from 'react-native-vector-icons/Ionicons'
 import { Icon } from '../atoms';
 
-const ExpensesItem = () => {
+const ExpensesItem = ({ moneyArray }) => {
     return (
-        <ExpensesItemContainer>
-            <ExpensesItemContent>
-                <ExpensesItemDate>24/02/2022 04:21</ExpensesItemDate>
-                <ExpensesItemCash>2043</ExpensesItemCash>
-            </ExpensesItemContent>
-            <ExpensesItemButtons>
-                <Icon add>
-                    <Ionic name='pencil' style={{ fontSize: 22, }} />
-                </Icon>
-                <Icon>
-                    <Ionic name='md-trash-outline' style={{ fontSize: 22, }} />
-                </Icon>
-            </ExpensesItemButtons>
-        </ExpensesItemContainer>
+        moneyArray.map((item, index) => {
+            return (
+                <ExpensesItemContainer key={item.time + item.value}>
+                    <ExpensesItemContent>
+                        <ExpensesItemDate>{item.time}</ExpensesItemDate>
+                        <ExpensesItemCash>{item.value}</ExpensesItemCash>
+                    </ExpensesItemContent>
+                    <ExpensesItemButtons>
+                        <Icon add>
+                            <Ionic name='pencil' style={{ fontSize: 22, }} />
+                        </Icon>
+                        <Icon>
+                            <Ionic name='md-trash-outline' style={{ fontSize: 22, }} />
+                        </Icon>
+                    </ExpensesItemButtons>
+                </ExpensesItemContainer>
+            )
+        })
     );
 }
 
