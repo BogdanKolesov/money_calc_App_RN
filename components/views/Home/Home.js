@@ -43,7 +43,11 @@ const Home = () => {
         }
     };
 
-    const savedItemArray = []
+    const savedItemArray = [
+        {
+            plus: plusInput
+        }
+    ]
 
     const setItemsToArray = async () => {
         const itemArray = savedItemArray;
@@ -91,6 +95,7 @@ const Home = () => {
             {
                 edit ?
                     (<>
+
                         <NumberInput onChangeText={setMoney} editable={edit} placeholder='Введите количество денег...' inputTitle='Всего средств' />
                         <NumberInput onChangeText={setDays} editable={edit} placeholder='Введите количество дней...' inputTitle='Количество дней' />
                         <Row>
@@ -104,6 +109,9 @@ const Home = () => {
                         <Button onPress={() => setEdit(!edit)} >Редактировать</Button>
                     </>
             }
+            <Text>{plusInput}</Text>
+            <Text>{minusInput}</Text>
+
             <ActionInputItem onChangeText={setPlusInput} onPress={() => setPostValues()} add />
             <ActionInputItem onChangeText={setMinusInput} />
         </AppContainer>

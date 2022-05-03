@@ -2,9 +2,9 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 
-const Icon = ({ children, add }) => {
+const Icon = ({ children, add, onPress }) => {
     return (
-        <StyledIcon add={add}>
+        <StyledIcon add={add} onPress={onPress}>
             {children}
         </StyledIcon>
     );
