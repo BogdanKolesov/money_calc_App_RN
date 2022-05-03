@@ -2,13 +2,14 @@ import React from 'react';
 import { View, TextInput, Text } from 'react-native';
 import styled from 'styled-components/native';
 
-const NumberInput = ({ defaultValue, editable, minified, inputTitle, placeholder, value }) => {
+const NumberInput = ({ onChangeText, value, defaultValue, editable, minified, inputTitle, placeholder }) => {
     return (
         <StyledView minified={minified}>
             <ViewTitle>
                 {inputTitle}
             </ViewTitle>
             <Input
+                onChangeText={onChangeText}
                 defaultValue={defaultValue}
                 editable={editable}
                 keyboardType="numeric"

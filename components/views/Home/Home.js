@@ -5,38 +5,60 @@ import { ActionInputItem } from '../../molecules';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Home = () => {
-
+    const [isLoading, setIsLoading] = useState(false);
     const [edit, setEdit] = useState(false);
     const [money, setMoney] = useState(0);
     const [days, setDays] = useState(0);
-    const [dayMoney, setDayMoney] = useState(0);
+    const [savedDefaultValue, setSavedDefaultValue] = useState({
+        money: 0,
+        days: 0,
+        dayMoney: 0
+    });
 
-    getMonyey = async () => {
+    const setDefaultValue = async () => {
+        const defaultValue = {
+            money: money,
+            days: days,
+            dayMoney: (Number(money) / Number(days)).toFixed(2)
+
+        };
         try {
-            const jsonValue = await AsyncStorage.getItem('@key')
-            return jsonValue != null ? JSON.parse(jsonValue) : null
-        } catch (e) {
-            // read error
+            await AsyncStorage.setItem("defaultValue", JSON.stringify(defaultValue));
+        } catch (error) {
+            console.log(error);
         }
+    };
 
-        console.log('Done.')
+    const getDefaultValue = async () => {
+        try {
+            const savedDefalutValue = await AsyncStorage.getItem("defaultValue");
+            const currentDefaultValue = JSON.parse(savedDefalutValue);
+            await setSavedDefaultValue(currentDefaultValue)
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
+    const setValuesToTop = async () => {
+        await setDefaultValue()
+        await getDefaultValue()
+        setEdit(!edit)
     }
-
     return (
         <AppContainer>
             <DevLabel />
-            <PageTitle title='Остаток средств' />
-            <Remainder money={money} days={days} dayMoney={dayMoney} />
             <Text>
+                {new Date().getHours()}
             </Text>
+            <PageTitle title='Остаток средств' />
+            <Remainder money={savedDefaultValue.money} days={savedDefaultValue.days} dayMoney={savedDefaultValue.dayMoney} />
             {
                 edit ?
                     (<>
-                        <NumberInput defaultValue={money} editable={edit} placeholder='Введите количество денег...' inputTitle='Всего средств' />
-                        <NumberInput defaultValue={days} editable={edit} placeholder='Введите количество дней...' inputTitle='Количество дней' />
+                        <NumberInput onChangeText={setMoney} editable={edit} placeholder='Введите количество денег...' inputTitle='Всего средств' />
+                        <NumberInput onChangeText={setDays} editable={edit} placeholder='Введите количество дней...' inputTitle='Количество дней' />
                         <Row>
-                            <Button ok minified onPress={() => setEdit(!edit)} >Ок</Button>
+                            <Button ok minified onPress={() => setValuesToTop()} >Ок</Button>
                             <Button notOk minified onPress={() => setEdit(!edit)} >Не ок</Button>
                         </Row>
                     </>)
