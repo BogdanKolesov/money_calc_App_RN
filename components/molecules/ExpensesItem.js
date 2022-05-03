@@ -34,7 +34,7 @@ const ExpensesItemContainer = styled.View`
     align-items: center;
     margin-top: 10px;
     border-bottom-color: green;
-    border-bottom-width: 1px;
+    border-bottom-width: 0.5px;
     padding-bottom: 10px;
 `
 

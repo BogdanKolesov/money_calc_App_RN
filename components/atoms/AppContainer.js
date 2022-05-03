@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 const AppContainer = ({ children }) => {
     return (
         <AppView>
-            <AppScrollView>
+            <AppScrollView showsVerticalScrollIndicator={false}>
                 {children}
             </AppScrollView>
         </AppView>

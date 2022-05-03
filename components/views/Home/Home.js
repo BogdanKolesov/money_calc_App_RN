@@ -79,7 +79,7 @@ const Home = () => {
         <AppContainer>
             <DevLabel />
             <Text>
-                {new Date().getHours()}
+                {/* {new Date().getHours()} */}
             </Text>
             <PageTitle title='Остаток средств' />
             <Remainder money={savedDefaultValue.money} days={savedDefaultValue.days} dayMoney={savedDefaultValue.dayMoney} />

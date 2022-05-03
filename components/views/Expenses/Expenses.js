@@ -21,7 +21,25 @@ const Expenses = () => {
             <DevLabel />
             <PageTitle title='Архив' />
             <ExpensesItem />
-            <Button notOK onPress={() => getDefaultValue()}>CLICK!!!!</Button>
+            <ExpensesItem />
+            <ExpensesItem />
+            <ExpensesItem />
+            <ExpensesItem />
+            <ExpensesItem />
+            <ExpensesItem />
+            <ExpensesItem />
+            <ExpensesItem />
+            <ExpensesItem />
+            <ExpensesItem />
+            <ExpensesItem />
+            <ExpensesItem />
+            <ExpensesItem />
+            <ExpensesItem />
+            <ExpensesItem />
+            <ExpensesItem />
+            <ExpensesItem />
+            <ExpensesItem />
+
         </AppContainer>
     );
 }
