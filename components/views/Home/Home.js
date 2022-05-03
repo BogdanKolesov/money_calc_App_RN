@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text } from 'react-native';
-import { AppContainer, Button, DevLabel, NumberInput, PageTitle, Remainder } from '../../atoms';
+import { AppContainer, Button, DevLabel, NumberInput, PageTitle, Remainder, Row } from '../../atoms';
 import { ActionInputItem } from '../../molecules';
 
 const Home = () => {
@@ -20,8 +20,10 @@ const Home = () => {
                     (<>
                         <NumberInput editable={edit} placeholder='32000' inputTitle='Всего средств' />
                         <NumberInput editable={edit} placeholder='20' inputTitle='Количество дней' />
-                        <Button onPress={() => setEdit(!edit)} >Ок</Button>
-                        <Button onPress={() => setEdit(!edit)} >Не ок</Button>
+                        <Row>
+                            <Button ok minified onPress={() => setEdit(!edit)} >Ок</Button>
+                            <Button notOk minified onPress={() => setEdit(!edit)} >Не ок</Button>
+                        </Row>
                     </>)
                     :
                     <>

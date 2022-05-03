@@ -3,14 +3,22 @@ import { TouchableOpacity, Text } from 'react-native';
 import styled from 'styled-components/native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-const Button = ({ children, onPress }) => {
+const buttonGradientVariants = {
+    regular: ['rgba(0, 93, 185, 0.4)', 'rgba(54, 57, 181, 0.6)'],
+    ok: ['rgba(65, 185, 59, 0.4)', 'rgba(82, 120, 182,0.6)'],
+    notOk: ['rgba(224, 108, 108, 0.4)', 'rgba(207, 154, 154, 0.6)']
+}
+
+const Button = ({ children, onPress, ok, notOk, minified }) => {
     return (
-        <StyledButton onPress={onPress}>
+        <StyledButton minified={minified} onPress={onPress}>
             <StyledText>
                 {children}
             </StyledText>
             <StyledLinearGradient
-                colors={['rgba(0, 93, 185, 0.4)', 'rgba(54, 57, 181, 0.6)']}
+                ok={ok}
+                notOk={notOk}
+                colors={ok || notOk ? (ok ? buttonGradientVariants.ok : buttonGradientVariants.notOk) : buttonGradientVariants.regular}
                 start={{ x: 0.5, y: 0. }}
                 end={{ x: 0.93, y: 1 }}
             />
@@ -22,7 +30,7 @@ const Button = ({ children, onPress }) => {
 export default Button;
 
 const StyledButton = styled.TouchableOpacity`
-    width: 200px;
+    width: ${props => props.minified ? '150px' : '200px'};
     height: 50px;
     /* border-width: 3px; */
     justify-content: center;
