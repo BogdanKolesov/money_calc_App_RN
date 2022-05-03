@@ -4,11 +4,11 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import styled from 'styled-components/native';
 import { Icon, NumberInput } from '../atoms';
 
-const ActionInputItem = ({ add }) => {
+const ActionInputItem = ({ add, onPress, ref }) => {
     return (
         <StyledView>
-            <NumberInput minified add={add} inputTitle={add ? 'Доходы' : 'Расходы'} />
-            <Icon add={add}>
+            <NumberInput ref={ref} minified add={add} inputTitle={add ? 'Доходы' : 'Расходы'} />
+            <Icon add={add} onPress={onPress}>
                 <AntDesign add={add} name={add ? 'plus' : 'minus'} style={{ fontSize: 18, color: add ? 'green' : 'red' }} />
             </Icon>
         </StyledView>
