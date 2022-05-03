@@ -2,11 +2,13 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import styled from 'styled-components/native';
 
-const Remainder = () => {
+const Remainder = ({ days, money, dayMoney }) => {
     return (
         <RemainderContainer>
             <RemainderTitle>Остаток:</RemainderTitle>
-            <RemainderText>32000 на 20 суток</RemainderText>
+            <RemainderText money={money} days={days}>{money} на {days} суток</RemainderText>
+            <RemainderText big>На день {dayMoney}</RemainderText>
+
         </RemainderContainer>
     );
 }
@@ -23,7 +25,7 @@ const RemainderTitle = styled.Text`
 `
 
 const RemainderText = styled.Text`
-    font-size: 30px;
+    font-size: ${props => props.big ? '34px' : '26px'};
     color: black;
     opacity: 0.8;
     letter-spacing: 1.1px;
