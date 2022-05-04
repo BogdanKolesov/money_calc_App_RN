@@ -13,12 +13,10 @@ const Expenses = () => {
             const savedItemsArrayValue = await AsyncStorage.getItem("itemArray");
             const currentItemsArrayValue = JSON.parse(savedItemsArrayValue);
             await setMoneyArray(currentItemsArrayValue)
-            console.log(savedArray)
         } catch (error) {
-            console.log(error);
+            console.log('Ошибка в getItemsFromArray');
         }
     };
-
     useEffect(() => {
         getItemsFromArray()
     }, []);

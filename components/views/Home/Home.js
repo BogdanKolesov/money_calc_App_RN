@@ -43,16 +43,21 @@ const Home = () => {
         }
     };
 
-    const addToArray = (value) => {
+    const addToArray = async (value) => {
         let date = (new Date()).toString()
-        setSavedArray(
-            [...savedArray,
-            {
-                value: value,
-                time: date
-            }
-            ]
-        )
+        if (value !== 0) {
+            await setSavedArray(
+                [...savedArray,
+                {
+                    value: value,
+                    time: date
+                }
+                ]
+            )
+
+        } else {
+            console.log('Ошибка в addToArray')
+        }
     }
 
 
@@ -61,20 +66,17 @@ const Home = () => {
             await addToArray(value)
             const itemArray = savedArray;
             await AsyncStorage.setItem("itemArray", JSON.stringify(itemArray));
-            await setSavedArray([])
         } catch (error) {
             console.log(error);
         }
     };
-
     const getItemsFromArray = async () => {
         try {
             const savedItemsArrayValue = await AsyncStorage.getItem("itemArray");
             const currentItemsArrayValue = JSON.parse(savedItemsArrayValue);
             await setSavedArray(currentItemsArrayValue)
-            console.log(savedArray)
         } catch (error) {
-            console.log(error);
+            console.log('Ошибка в getItemsFromArray');
         }
     };
 
@@ -89,6 +91,7 @@ const Home = () => {
     }
 
     useEffect(() => {
+        getItemsFromArray()
         getDefaultValue()
     }, []);
 
@@ -117,13 +120,7 @@ const Home = () => {
                         <Button onPress={() => setEdit(!edit)} >Редактировать</Button>
                     </>
             }
-            {
-                savedArray.map((data, index) => {
-                    return (
-                        <Text key={index}>time:{data.time} ,{data.value}</Text>
-                    )
-                })
-            }
+
             <ActionInputItem onChangeText={setPlusInput} onPress={() => setPostValues(plusInput)} add />
             <ActionInputItem onChangeText={setMinusInput} onPress={() => setPostValues(-(minusInput))} />
         </AppContainer>

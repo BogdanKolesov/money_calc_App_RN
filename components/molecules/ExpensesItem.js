@@ -6,9 +6,9 @@ import { Icon } from '../atoms';
 
 const ExpensesItem = ({ moneyArray }) => {
     return (
-        moneyArray.map((item, index) => {
+        moneyArray.reverse().map((item, index) => {
             return (
-                <ExpensesItemContainer key={item.time + item.value}>
+                <ExpensesItemContainer value={item.value} key={item.time + item.value + index}>
                     <ExpensesItemContent>
                         <ExpensesItemDate>{item.time}</ExpensesItemDate>
                         <ExpensesItemCash>{item.value}</ExpensesItemCash>
@@ -37,7 +37,7 @@ const ExpensesItemContainer = styled.View`
     justify-content: space-between;
     align-items: center;
     margin-top: 10px;
-    border-bottom-color: green;
+    border-bottom-color: ${props => props.value > 0 ? 'green' : 'red'};
     border-bottom-width: 0.5px;
     padding-bottom: 10px;
 `
