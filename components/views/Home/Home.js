@@ -17,7 +17,7 @@ const Home = () => {
         dayMoney: 0,
         date: null
     });
-    const [savedArray, setSavedArray] = useState([]);
+    const [itemsArray, setItemsArray] = useState([]);
 
     const setDefaultValue = async () => {
         const defaultValue = {
@@ -46,8 +46,8 @@ const Home = () => {
     const addToArray = async (value) => {
         let date = (new Date()).toString()
         if (value !== 0) {
-            await setSavedArray(
-                [...savedArray,
+            await setItemsArray(
+                [...itemsArray,
                 {
                     value: value,
                     time: date
@@ -64,17 +64,27 @@ const Home = () => {
     const setItemsToArray = async (value) => {
         try {
             await addToArray(value)
-            const itemArray = savedArray;
+            const itemArray = itemsArray;
             await AsyncStorage.setItem("itemArray", JSON.stringify(itemArray));
+            console.log(itemArray)
         } catch (error) {
             console.log(error);
         }
     };
+
+    const clearItemsArray = async (value) => {
+        try {
+            await AsyncStorage.setItem("itemArray", JSON.stringify([]));
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     const getItemsFromArray = async () => {
         try {
             const savedItemsArrayValue = await AsyncStorage.getItem("itemArray");
             const currentItemsArrayValue = JSON.parse(savedItemsArrayValue);
-            await setSavedArray(currentItemsArrayValue)
+            await setItemsArray(currentItemsArrayValue)
         } catch (error) {
             console.log('Ошибка в getItemsFromArray');
         }
@@ -123,6 +133,7 @@ const Home = () => {
 
             <ActionInputItem onChangeText={setPlusInput} onPress={() => setPostValues(plusInput)} add />
             <ActionInputItem onChangeText={setMinusInput} onPress={() => setPostValues(-(minusInput))} />
+            <Button notOk onPress={() => clearItemsArray()} >Очистить архив</Button>
         </AppContainer>
     );
 }

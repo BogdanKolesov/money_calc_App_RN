@@ -17,6 +17,7 @@ const Expenses = () => {
             console.log('Ошибка в getItemsFromArray');
         }
     };
+
     useEffect(() => {
         getItemsFromArray()
     }, []);
@@ -25,7 +26,16 @@ const Expenses = () => {
         <AppContainer>
             <DevLabel />
             <PageTitle title='Архив' />
-            <ExpensesItem moneyArray={moneyArray} />
+            {
+                moneyArray.length !== 0 ?
+                    (
+                        <ExpensesItem moneyArray={moneyArray} />
+                    )
+                    :
+                    (
+                        <PageTitle>Нет данных</PageTitle>
+                    )
+            }
         </AppContainer>
     );
 }
