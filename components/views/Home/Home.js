@@ -24,7 +24,7 @@ const Home = ({ ex }) => {
     const setDefaultValue = async () => {
         await calcBudget()
         const defaultValue = {
-            money: Number(money) - Number(moneyMinus),
+            money: Number(money),
             days: days,
             dayMoney: (Number(money) / Number(days)).toFixed(2),
             date: new Date()
@@ -47,7 +47,7 @@ const Home = ({ ex }) => {
     };
 
     const addToArray = async (value) => {
-        let date = (new Date()).toString()
+        let date = (new Date())
         if (value !== 0) {
             await setItemsArray(
                 [...itemsArray,
@@ -78,6 +78,8 @@ const Home = ({ ex }) => {
     const clearItemsArray = async (value) => {
         try {
             await AsyncStorage.setItem("itemArray", JSON.stringify([]));
+            await AsyncStorage.setItem('moneyMinusStorage', JSON.stringify(0))
+            await setValuesToTop()
         } catch (error) {
             console.log(error);
         }
@@ -101,6 +103,7 @@ const Home = ({ ex }) => {
 
     const setPostValues = async (value) => {
         await setItemsToArray(value)
+        await calcBudget()
     }
 
     useEffect(() => {
