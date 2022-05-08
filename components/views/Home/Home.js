@@ -110,9 +110,27 @@ const Home = ({ ex }) => {
     }, []);
 
     const calcBudget = () => {
-        const filtredArray = itemsArray.filter(item => new Date(item.time) >= new Date(savedDefaultValue.date));
-        const result = filtredArray.map(item => item.value).reduce((prev, curr) => prev + curr, 0)
-        setMoneyMinus(result)
+
+        const setToMoneyMinus = async () => {
+            const filtredArray = itemsArray.filter(item => new Date(item.time) >= new Date(savedDefaultValue.date));
+            const result = filtredArray.map(item => item.value).reduce((prev, curr) => prev + curr, 0)
+            try {
+                await AsyncStorage.setItem("moneyMinusStorage", JSON.stringify(result));
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        const getFromMoneyMinus = async () => {
+            try {
+                const minus = await AsyncStorage.getItem("moneyMinusStorage");
+                const currentMoneyMinus = JSON.parse(minus);
+                await setMoneyMinus(currentMoneyMinus)
+            } catch (error) {
+                console.log('Ошибка в getFromMoneyMinus');
+            }
+        }
+        setToMoneyMinus()
+        getFromMoneyMinus()
         console.log(moneyMinus)
     }
 
