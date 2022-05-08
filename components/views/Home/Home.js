@@ -4,7 +4,7 @@ import { AppContainer, Button, DevLabel, NumberInput, PageTitle, Remainder, Row 
 import { ActionInputItem } from '../../molecules';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Home = () => {
+const Home = ({ ex }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [edit, setEdit] = useState(false);
     const [money, setMoney] = useState(0);
@@ -18,11 +18,13 @@ const Home = () => {
         date: null
     });
     const [itemsArray, setItemsArray] = useState([]);
+    const [moneyMinus, setMoneyMinus] = useState(0);
 
 
     const setDefaultValue = async () => {
+        await calcBudget()
         const defaultValue = {
-            money: money,
+            money: Number(money) - Number(moneyMinus),
             days: days,
             dayMoney: (Number(money) / Number(days)).toFixed(2),
             date: new Date()
@@ -50,7 +52,7 @@ const Home = () => {
             await setItemsArray(
                 [...itemsArray,
                 {
-                    value: value,
+                    value: Number(value),
                     time: date
                 }
                 ]
@@ -64,10 +66,10 @@ const Home = () => {
 
     const setItemsToArray = async (value) => {
         try {
-            await addToArray(value)
             const itemArray = itemsArray;
+            await addToArray(value)
             await AsyncStorage.setItem("itemArray", JSON.stringify(itemArray));
-            console.log(itemArray)
+            await calcBudget()
         } catch (error) {
             console.log(error);
         }
@@ -102,18 +104,23 @@ const Home = () => {
     }
 
     useEffect(() => {
+        calcBudget()
         getItemsFromArray()
         getDefaultValue()
     }, []);
 
-
-
+    const calcBudget = () => {
+        const filtredArray = itemsArray.filter(item => new Date(item.time) >= new Date(savedDefaultValue.date));
+        const result = filtredArray.map(item => item.value).reduce((prev, curr) => prev + curr, 0)
+        setMoneyMinus(result)
+        console.log(moneyMinus)
+    }
 
     return (
         <AppContainer>
             <DevLabel />
             <PageTitle title='Остаток средств' />
-            <Remainder money={savedDefaultValue.money} days={savedDefaultValue.days} dayMoney={savedDefaultValue.dayMoney} />
+            <Remainder money={savedDefaultValue.money} days={savedDefaultValue.days} dayMoney={savedDefaultValue.dayMoney} moneyMinus={moneyMinus} />
             {
                 edit ?
                     (<>
@@ -127,7 +134,6 @@ const Home = () => {
                     </>)
                     :
                     <>
-
                         <Button onPress={() => setEdit(!edit)} >Редактировать</Button>
                     </>
             }
@@ -135,6 +141,7 @@ const Home = () => {
             <ActionInputItem onChangeText={setPlusInput} onPress={() => setPostValues(plusInput)} add />
             <ActionInputItem onChangeText={setMinusInput} onPress={() => setPostValues(-(minusInput))} />
             <Button notOk onPress={() => clearItemsArray()} >Очистить архив</Button>
+            <Button ok onPress={() => calcBudget()}>ГЕТ ИТ</Button>
         </AppContainer>
     );
 }

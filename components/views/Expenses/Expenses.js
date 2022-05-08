@@ -26,6 +26,7 @@ const Expenses = () => {
         <AppContainer>
             <DevLabel />
             <PageTitle title='Архив' />
+            <Button ok onPress={() => getItemsFromArray()}>Обновить</Button>
             {
                 moneyArray.length !== 0 ?
                     (

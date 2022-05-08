@@ -7,6 +7,7 @@ import Home from './components/views/Home';
 import Expenses from './components/views/Expenses';
 
 export default function App() {
+
   let [fontsLoaded] = useFonts({
     Roboto_400Regular, Roboto_100Thin, Roboto_900Black
   });
