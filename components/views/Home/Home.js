@@ -19,6 +19,7 @@ const Home = () => {
     });
     const [itemsArray, setItemsArray] = useState([]);
 
+
     const setDefaultValue = async () => {
         const defaultValue = {
             money: money,
