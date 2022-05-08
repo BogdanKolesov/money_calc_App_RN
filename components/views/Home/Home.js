@@ -22,8 +22,7 @@ const Home = ({ ex }) => {
 
 
     const setDefaultValue = async () => {
-        await calcBudget()
-        const defaultValue = {
+        const defaultValue = await {
             money: Number(money),
             days: days,
             dayMoney: (Number(money) / Number(days)).toFixed(2),
@@ -39,24 +38,24 @@ const Home = ({ ex }) => {
     const getDefaultValue = async () => {
         try {
             const savedDefalutValue = await AsyncStorage.getItem("defaultValue");
-            const currentDefaultValue = JSON.parse(savedDefalutValue);
+            const currentDefaultValue = await JSON.parse(savedDefalutValue);
             await setSavedDefaultValue(currentDefaultValue)
         } catch (error) {
             console.log(error);
         }
     };
 
-    const addToArray = async (value) => {
+    const addToArray = (value) => {
         let date = (new Date())
         if (value !== 0) {
-            await setItemsArray(
+            setItemsArray(
                 [...itemsArray,
                 {
                     value: Number(value),
                     time: date
-                }
-                ]
+                }]
             )
+            console.log(itemsArray)
 
         } else {
             console.log('Ошибка в addToArray')
@@ -66,10 +65,10 @@ const Home = ({ ex }) => {
 
     const setItemsToArray = async (value) => {
         try {
-            const itemArray = itemsArray;
             await addToArray(value)
+            const itemArray = itemsArray;
             await AsyncStorage.setItem("itemArray", JSON.stringify(itemArray));
-            await calcBudget()
+            console.log(itemsArray)
         } catch (error) {
             console.log(error);
         }
@@ -79,6 +78,7 @@ const Home = ({ ex }) => {
         try {
             await AsyncStorage.setItem("itemArray", JSON.stringify([]));
             await AsyncStorage.setItem('moneyMinusStorage', JSON.stringify(0))
+            await setMoneyMinus(0)
             await setValuesToTop()
         } catch (error) {
             console.log(error);
@@ -88,7 +88,7 @@ const Home = ({ ex }) => {
     const getItemsFromArray = async () => {
         try {
             const savedItemsArrayValue = await AsyncStorage.getItem("itemArray");
-            const currentItemsArrayValue = JSON.parse(savedItemsArrayValue);
+            const currentItemsArrayValue = await JSON.parse(savedItemsArrayValue);
             await setItemsArray(currentItemsArrayValue)
         } catch (error) {
             console.log('Ошибка в getItemsFromArray');
@@ -117,6 +117,8 @@ const Home = ({ ex }) => {
         const result = filtredArray.map(item => item.value).reduce((prev, curr) => prev + curr, 0)
         try {
             await AsyncStorage.setItem("moneyMinusStorage", JSON.stringify(result));
+            await console.log(result, '00000000')
+
         } catch (error) {
             console.log(error);
         }
@@ -134,7 +136,6 @@ const Home = ({ ex }) => {
     const calcBudget = async () => {
         await setToMoneyMinus()
         await getFromMoneyMinus()
-        console.log(moneyMinus)
     }
 
     return (
@@ -158,7 +159,6 @@ const Home = ({ ex }) => {
                         <Button onPress={() => setEdit(!edit)} >Редактировать</Button>
                     </>
             }
-
             <ActionInputItem onChangeText={setPlusInput} onPress={() => setPostValues(plusInput)} add />
             <ActionInputItem onChangeText={setMinusInput} onPress={() => setPostValues(-(minusInput))} />
             <Button notOk onPress={() => clearItemsArray()} >Очистить архив</Button>
