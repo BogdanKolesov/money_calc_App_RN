@@ -162,7 +162,6 @@ const Home = ({ ex }) => {
             <ActionInputItem onChangeText={setPlusInput} onPress={() => setPostValues(plusInput)} add />
             <ActionInputItem onChangeText={setMinusInput} onPress={() => setPostValues(-(minusInput))} />
             <Button notOk onPress={() => clearItemsArray()} >Очистить архив</Button>
-            <Button ok onPress={() => calcBudget()}>ГЕТ ИТ</Button>
         </AppContainer>
     );
 }
