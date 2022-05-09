@@ -4,7 +4,7 @@ import { AppContainer, Button, DevLabel, NumberInput, PageTitle, Remainder, Row 
 import { ActionInputItem } from '../../molecules';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Home = ({ ex }) => {
+const Home = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [edit, setEdit] = useState(false);
     const [money, setMoney] = useState(0);
@@ -18,7 +18,7 @@ const Home = ({ ex }) => {
         date: null
     });
     const [itemsArray, setItemsArray] = useState([]);
-    const [moneyMinus, setMoneyMinus] = useState(0);
+    const [moneyMinus, setMoneyMinus] = useState();
 
 
     const setDefaultValue = async () => {
@@ -66,9 +66,9 @@ const Home = ({ ex }) => {
     const setItemsToArray = async (value) => {
         try {
             await addToArray(value)
-            const itemArray = itemsArray;
+            const itemArray = await itemsArray;
             await AsyncStorage.setItem("itemArray", JSON.stringify(itemArray));
-            console.log(itemsArray)
+            // console.log(itemsArray)
         } catch (error) {
             console.log(error);
         }
@@ -142,7 +142,7 @@ const Home = ({ ex }) => {
         <AppContainer>
             <DevLabel />
             <PageTitle title='Остаток средств' />
-            <Remainder money={savedDefaultValue.money} days={savedDefaultValue.days} dayMoney={savedDefaultValue.dayMoney} moneyMinus={moneyMinus} />
+            <Remainder money={savedDefaultValue.money} days={savedDefaultValue.days} moneyMinus={moneyMinus} />
             {
                 edit ?
                     (<>

@@ -2,12 +2,12 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import styled from 'styled-components/native';
 
-const Remainder = ({ days, money, dayMoney, moneyMinus }) => {
+const Remainder = ({ days, money, moneyMinus }) => {
     return (
         <RemainderContainer>
             <RemainderTitle>Бюджет:</RemainderTitle>
             <RemainderText money={money} moneyMinus={moneyMinus} days={days}>{money - (-moneyMinus)} на {days} суток</RemainderText>
-            <RemainderText moneyMinus={moneyMinus}>Потрачено: {moneyMinus} </RemainderText>
+            <RemainderText moneyMinus={moneyMinus}>{moneyMinus >= 0 ? 'Доход' : 'Расход'}: {moneyMinus} </RemainderText>
             <RemainderText money={money} days={days}>Было: {money} на {days} суток</RemainderText>
             <RemainderText big>На день {(Number(money) - Number(-moneyMinus)) / Number(days)}</RemainderText>
         </RemainderContainer>
