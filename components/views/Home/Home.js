@@ -46,6 +46,7 @@ const Home = () => {
     };
 
     const addToArray = (value) => {
+        console.log(itemsArray)
         let date = (new Date())
         if (value !== 0) {
             setItemsArray(
@@ -65,10 +66,9 @@ const Home = () => {
 
     const setItemsToArray = async (value) => {
         try {
-            await addToArray(value)
-            const itemArray = await itemsArray;
+            addToArray(value)
+            const itemArray = itemsArray;
             await AsyncStorage.setItem("itemArray", JSON.stringify(itemArray));
-            // console.log(itemsArray)
         } catch (error) {
             console.log(error);
         }
@@ -88,22 +88,23 @@ const Home = () => {
     const getItemsFromArray = async () => {
         try {
             const savedItemsArrayValue = await AsyncStorage.getItem("itemArray");
-            const currentItemsArrayValue = await JSON.parse(savedItemsArrayValue);
-            await setItemsArray(currentItemsArrayValue)
+            const currentItemsArrayValue = JSON.parse(savedItemsArrayValue);
+            setItemsArray(currentItemsArrayValue)
+            // await console.log(itemsArray)
         } catch (error) {
             console.log('Ошибка в getItemsFromArray');
         }
     };
 
-    const setValuesToTop = async () => {
-        await setDefaultValue()
-        await getDefaultValue()
+    const setValuesToTop = () => {
+        setDefaultValue()
+        getDefaultValue()
         setEdit(!edit)
     }
 
-    const setPostValues = async (value) => {
-        await setItemsToArray(value)
-        await calcBudget()
+    const setPostValues = (value) => {
+        setItemsToArray(value)
+        calcBudget()
     }
 
     useEffect(() => {
@@ -117,7 +118,7 @@ const Home = () => {
         const result = filtredArray.map(item => item.value).reduce((prev, curr) => prev + curr, 0)
         try {
             await AsyncStorage.setItem("moneyMinusStorage", JSON.stringify(result));
-            await console.log(result, '00000000')
+            console.log(result, 'moneyMinus')
 
         } catch (error) {
             console.log(error);
@@ -127,15 +128,15 @@ const Home = () => {
         try {
             const minus = await AsyncStorage.getItem("moneyMinusStorage");
             const currentMoneyMinus = JSON.parse(minus);
-            await setMoneyMinus(currentMoneyMinus)
+            setMoneyMinus(currentMoneyMinus)
         } catch (error) {
             console.log('Ошибка в getFromMoneyMinus');
         }
     }
 
-    const calcBudget = async () => {
-        await setToMoneyMinus()
-        await getFromMoneyMinus()
+    const calcBudget = () => {
+        setToMoneyMinus()
+        getFromMoneyMinus()
     }
 
     return (

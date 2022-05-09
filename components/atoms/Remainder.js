@@ -9,7 +9,7 @@ const Remainder = ({ days, money, moneyMinus }) => {
             <RemainderText money={money} moneyMinus={moneyMinus} days={days}>{money - (-moneyMinus)} на {days} суток</RemainderText>
             <RemainderText moneyMinus={moneyMinus}>{moneyMinus >= 0 ? 'Доход' : 'Расход'}: {moneyMinus} </RemainderText>
             <RemainderText money={money} days={days}>Было: {money} на {days} суток</RemainderText>
-            <RemainderText big>На день {(Number(money) - Number(-moneyMinus)) / Number(days)}</RemainderText>
+            <RemainderText big>{money ? `На день ${(Number(money) - Number(-moneyMinus)) / Number(days)}` : 'Введите данные'}</RemainderText>
         </RemainderContainer>
     );
 }
